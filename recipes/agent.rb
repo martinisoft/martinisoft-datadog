@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: martinisoft-datadog
-# Recipe:: default
+# Recipe:: agent
 #
 # Copyright (C) 2014 Aaron Kalin
 #
@@ -17,16 +17,5 @@
 # limitations under the License.
 #
 
-datadog_info = begin
-                 env_vars = Chef::EncryptedDataBagItem.load("martinisoftware", "api_keys").to_hash
-                 env_vars.delete("id")
-                 env_vars["datadog"]
-               rescue => ex
-                 raise "Could not decrypt or load api_keys data bag! #{ex}"
-               end
-
-node.set["datadog"]["api_key"] = datadog_info["api_key"]
-node.set["datadog"]["application_key"] = datadog_info["application_key"]
-
-include_recipe "datadog::default"
-
+include_recipe "martinisoft-datadog"
+include_recipe "datadog::dd-agent"

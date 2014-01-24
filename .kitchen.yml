@@ -12,7 +12,9 @@ platforms:
   - name: ubuntu-12.04
 
 suites:
-  - name: default
+  - name: agent
     run_list:
-      - recipe[martinisoft-datadog::default]
+      - recipe[martinisoft-datadog::agent]
+    data_bag_path: test/integration/data_bags
+    encrypted_data_bag_secret_key_path: test/integration/data_bags/encrypted_data_bag_secret
     attributes:
